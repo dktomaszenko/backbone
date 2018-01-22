@@ -1,6 +1,6 @@
 var TodoItemsView = Backbone.View.extend({
     tagName: 'ul',
-    id: 'todoItem',
+    id: 'todoItems',
     initialize: function (options) {
         if (!(options && options.model)) {
             throw new Error('model is not specified');
@@ -22,16 +22,18 @@ var TodoItemsView = Backbone.View.extend({
     },
     onClickAdd: function () {
         var $textBox = this.$('#newTodoItem');
-        var todoItem = new TodoItem({description: $textBox.val()});
-        this.model.add(todoItem);
+        if($textBox.val()){
+            var todoItem = new TodoItem({description: $textBox.val()});
+            this.model.add(todoItem);
 
-        $textBox.val('');
+            $textBox.val('');
+        }
 
     },
     render: function () {
         var self = this;
 
-        this.$el.append('<input type="text" id="newTodoItem" />');
+        this.$el.append('<input type="text" autofocus id="newTodoItem" />');
         this.$el.append('<button id="add">Add</button>');
 
         this.model.each(function (todoItem) {
