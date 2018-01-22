@@ -12,15 +12,26 @@ var TodoItemsView = Backbone.View.extend({
         this.$el.append(view.render().$el);
     },
     events: {
-        'click #add': 'onClickAdd'
+        'click #add': 'onClickAdd',
+        'keypress #newTodoItem': 'onKeyPress'
+    },
+    onKeyPress: function (e) {
+        if(e.keyCode == 13){
+            this.onClickAdd();
+        }
     },
     onClickAdd: function () {
-        var todoItem = new TodoItem({description: 'New Todo Item'});
+        var $textBox = this.$('#newTodoItem');
+        var todoItem = new TodoItem({description: $textBox.val()});
         this.model.add(todoItem);
+
+        $textBox.val('');
+
     },
     render: function () {
         var self = this;
 
+        this.$el.append('<input type="text" id="newTodoItem" />');
         this.$el.append('<button id="add">Add</button>');
 
         this.model.each(function (todoItem) {
