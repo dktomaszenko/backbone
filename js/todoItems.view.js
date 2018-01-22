@@ -8,7 +8,8 @@ var TodoItemsView = Backbone.View.extend({
         this.model.on('add', this.onAddTodoItem, this);
     },
     onAddTodoItem: function (todoItem) {
-      console.log('Added');
+        var view = new TodoItemView({model: todoItem});
+        this.$el.append(view.render().$el);
     },
     events: {
         'click #add': 'onClickAdd'
